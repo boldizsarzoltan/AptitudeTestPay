@@ -1,0 +1,16 @@
+{
+    "name": "zoli/pay-aptitude-test",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Zoli\\PayAptitudeTest\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "boldizsarzoltan",
+            "email": "boldizsar.zoltan3@gmail.com"
+        }
+    ],
+    "require": {}
+}
