@@ -16,9 +16,18 @@ class CurrencyService
         $this->repository = $repository;
     }
 
+    public function convertTo(Currency $startCurrency, Currency $targetCurrency, float $amount): float
+    {
+        $conversionRate = $this->repository->getCurrencyConversionRate(
+            $startCurrency,
+            $targetCurrency
+        );
+        return $conversionRate * $amount;
+    }
+
     public function convertToDefault(Currency $currency, float $amount): float
     {
-        if($currency->isDefault()) {
+        if ($currency->isDefault()) {
             return $amount;
         }
         $conversionRate = $this->repository->getCurrencyConversionRate(

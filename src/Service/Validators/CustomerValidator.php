@@ -24,8 +24,10 @@ class CustomerValidator
         if (!$savedCustomer) {
             return;
         }
-        if ($actualCustomer->getCustomerType()->getClientType() !== $savedCustomer->getCustomerType()->getClientType())
-        {
+        if (
+            $actualCustomer->getCustomerType()->getClientType() !==
+            $savedCustomer->getCustomerType()->getClientType()
+        ) {
             throw new CustomerValidationFailedException("Customer type changed between operations");
         }
     }

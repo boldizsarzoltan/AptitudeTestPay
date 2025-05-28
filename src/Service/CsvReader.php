@@ -18,8 +18,12 @@ class CsvReader
      * @param string $delimiter The CSV field delimiter (e.g., ',').
      * @param string $enclosure The CSV field enclosure (e.g., '"').
      */
-    public function __construct(string $filePath, bool $hasHeader = true, string $delimiter = ',', string $enclosure = '"')
-    {
+    public function __construct(
+        string $filePath,
+        bool $hasHeader = true,
+        string $delimiter = ',',
+        string $enclosure = '"'
+    ) {
         $this->filePath = $filePath;
         $this->hasHeader = $hasHeader;
         $this->delimiter = $delimiter;

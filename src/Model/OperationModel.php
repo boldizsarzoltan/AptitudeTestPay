@@ -48,4 +48,9 @@ class OperationModel
     {
         return $this->currency;
     }
+
+    public function getCopyWithNewAmount(float $newAmount): OperationModel
+    {
+        return new OperationModel($this->dateTime, $this->customer, $this->operationType, $newAmount, $this->currency);
+    }
 }

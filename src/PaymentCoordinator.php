@@ -1,6 +1,7 @@
 <?php
 
 namespace Paysera\CommissionTask;
+
 use Paysera\CommissionTask\Model\OperationResult;
 use Paysera\CommissionTask\Service\CsvReader;
 use Paysera\CommissionTask\Service\Mappers\OperationMapper;
@@ -10,8 +11,6 @@ use Paysera\CommissionTask\Service\Validators\CustomerValidator;
 
 class PaymentCoordinator
 {
-
-
     private OperationMapper $operationMapper;
     private OperationRunner $operationRunner;
     private CustomerValidator $customerValidator;
@@ -19,9 +18,8 @@ class PaymentCoordinator
     public function __construct(
         OperationMapper $operationMapper,
         OperationRunner $operationRunner,
-        CustomerValidator $customerValidator,
-    )
-    {
+        CustomerValidator $customerValidator
+    ) {
         $this->operationMapper = $operationMapper;
         $this->operationRunner = $operationRunner;
         $this->customerValidator = $customerValidator;

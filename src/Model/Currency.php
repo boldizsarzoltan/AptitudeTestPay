@@ -26,5 +26,4 @@ class Currency
     {
         return $this->currency === self::DEFAULT_CURRENCY;
     }
-
 }
