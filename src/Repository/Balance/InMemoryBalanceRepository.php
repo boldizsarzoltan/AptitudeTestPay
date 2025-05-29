@@ -19,7 +19,7 @@ class InMemoryBalanceRepository implements BalanceRepository
 
     public function getBalance(Customer $customer): Balance
     {
-        if (isset($this->balances[$customer->getCustomerId()])) {
+        if (!isset($this->balances[$customer->getCustomerId()])) {
             $this->balances[$customer->getCustomerId()] = new Balance(0, 0);
         }
         return $this->balances[$customer->getCustomerId()];

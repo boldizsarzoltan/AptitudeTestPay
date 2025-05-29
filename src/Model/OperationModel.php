@@ -15,7 +15,7 @@ class OperationModel
         Customer $customer,
         OperationType $operationType,
         float $amount,
-        Currency $currency,
+        Currency $currency
     ) {
         $this->dateTime = $dateTime;
         $this->customer = $customer;

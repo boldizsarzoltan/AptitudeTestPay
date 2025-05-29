@@ -9,7 +9,7 @@ class Customer
 
     public function __construct(
         int $customerId,
-        CustomerType $customerType,
+        CustomerType $customerType
     ) {
         $this->customerId = $customerId;
         $this->customerType = $customerType;

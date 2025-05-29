@@ -52,10 +52,10 @@ class InMemoryCurrencyRepository implements CurrencyRepository
             return 1;
         }
         if ($targetCurrency->isDefault()) {
-            return $this->currencies->getRates()[$startCurrency->getCurrency()];
+            return $this->math->divide(1, $this->currencies->getRates()[$startCurrency->getCurrency()]);
         }
         if ($startCurrency->isDefault()) {
-            return $this->math->divide(1, $this->currencies->getRates()[$targetCurrency->getCurrency()]);
+            return $this->currencies->getRates()[$targetCurrency->getCurrency()];
         }
         return $this->math->multiply(
             $this->currencies->getRates()[$startCurrency->getCurrency()],

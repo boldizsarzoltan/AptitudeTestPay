@@ -29,12 +29,12 @@ class Container
 
     public function runOperations(string $inputFilePath)
     {
-        $operations = new CsvReader($inputFilePath);
+        $operations = (new CsvReader($inputFilePath, false))->readAll();
         $paymentCoordinator = $this->getPaymentCoordinator();
         foreach ($operations as $operation) {
             try {
                 $result = $paymentCoordinator->runOperation($operation);
-                echo($result->fee . PHP_EOL);
+                echo($result->getFee() . PHP_EOL);
             } catch (Exception $e) {
                 echo($e->getMessage() . PHP_EOL);
             }

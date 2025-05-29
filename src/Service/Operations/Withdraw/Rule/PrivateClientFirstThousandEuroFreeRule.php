@@ -11,10 +11,11 @@ use Paysera\CommissionTask\Service\Currency\CurrencyService;
 class PrivateClientFirstThousandEuroFreeRule implements WithdrawRuleInterface
 {
     private BalanceRepository $repository;
+    private CurrencyService $currencyService;
 
     public function __construct(
         BalanceRepository $repository,
-        CurrencyService  $currencyService
+        CurrencyService $currencyService
     ) {
         $this->repository = $repository;
         $this->currencyService = $currencyService;
@@ -32,12 +33,18 @@ class PrivateClientFirstThousandEuroFreeRule implements WithdrawRuleInterface
     public function getMatchedAmount(OperationModel $operation): float
     {
         $currentBalance = $this->repository->getBalance($operation->getCustomer());
-        $currentOperation = $this->currencyService->convertToDefault($operation->getCurrency(), $operation->getAmount());
-        $amountInDefault = max(1000 - $currentOperation - $currentBalance->getWithdrawalAmount(), 0);
+        $currentOperationInDefault = $this->currencyService->convertToDefault(
+            $operation->getCurrency(),
+            $operation->getAmount()
+        );
+        $matchedAmount = (float) min(
+            max(1000 - $currentBalance->getWithdrawalAmount(), 0),
+            $currentOperationInDefault
+        );
         return $this->currencyService->convertTo(
             Currency::getDefaultCurrency(),
             $operation->getCurrency(),
-            $amountInDefault
+            $matchedAmount
         );
     }
 

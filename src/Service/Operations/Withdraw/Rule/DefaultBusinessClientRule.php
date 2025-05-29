@@ -11,8 +11,7 @@ class DefaultBusinessClientRule implements WithdrawRuleInterface
 
     public function __construct(
         Math $math
-    )
-    {
+    ) {
         $this->math = $math;
     }
 

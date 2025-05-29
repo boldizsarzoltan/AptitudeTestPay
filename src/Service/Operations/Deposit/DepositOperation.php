@@ -38,7 +38,7 @@ class DepositOperation implements Operation
         $commission  = 0;
         $currentlyProcessed  = 0;
         foreach ($this->operationRules as $operationRule) {
-            if(!$operationRule->isMatch($operation)) {
+            if (!$operationRule->isMatch($operation)) {
                 continue;
             }
             $matchedAmount = $operationRule->getMatchedAmount($operation);

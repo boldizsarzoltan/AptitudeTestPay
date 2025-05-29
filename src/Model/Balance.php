@@ -9,7 +9,7 @@ class Balance
 
     public function __construct(
         float $depositedAmount,
-        float $withdrawalAmount,
+        float $withdrawalAmount
     ) {
         $this->depositedAmount = $depositedAmount;
         $this->withdrawalAmount = $withdrawalAmount;

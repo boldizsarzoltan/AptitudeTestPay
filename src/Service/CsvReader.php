@@ -2,6 +2,8 @@
 
 namespace Paysera\CommissionTask\Service;
 
+use Exception;
+
 class CsvReader
 {
     private string $filePath;

@@ -38,7 +38,7 @@ class BalanceCalculator
         OperationResult $result,
         OperationModel $operationModel
     ): Balance {
-        $amount = $this->currencyService->convertToDefault($operationModel->getCurrency(), $result->fee);
+        $amount = $this->currencyService->convertToDefault($operationModel->getCurrency(), $result->getFee());
         switch ($operationModel->getOperationType()->getOperationType()) {
             case OperationType::WITHDRAW:
                 return new Balance(
@@ -51,5 +51,6 @@ class BalanceCalculator
                     $currentBalance->getWithdrawalAmount()
                 );
         }
+        throw new \RuntimeException('Unknown operation type');
     }
 }

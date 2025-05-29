@@ -23,8 +23,7 @@ class WithdrawOperation implements Operation
     public function __construct(
         array $operationRules,
         Math $math
-    )
-    {
+    ) {
         $this->operationRules = $operationRules;
         $this->math = $math;
     }
@@ -33,8 +32,9 @@ class WithdrawOperation implements Operation
     {
         $commission  = 0;
         $currentlyProcessed  = 0;
+        $originalAmount = $operation->getAmount();
         foreach ($this->operationRules as $operationRule) {
-            if(!$operationRule->isMatch($operation)) {
+            if (!$operationRule->isMatch($operation)) {
                 continue;
             }
             $matchedAmount = $operationRule->getMatchedAmount($operation);
@@ -43,9 +43,12 @@ class WithdrawOperation implements Operation
                 $commission,
                 $operationRule->getCommission($operation->getCopyWithNewAmount($matchedAmount))
             );
-            if ($currentlyProcessed == $operation->getAmount()) {
+            if ($currentlyProcessed == $originalAmount || $operation->getAmount() == $matchedAmount) {
                 return new OperationResult($commission);
             }
+            $operation = $operation->getCopyWithNewAmount(
+                $operation->getAmount() - $matchedAmount
+            );
         }
         throw new \RuntimeException('Commisioned rule did not match all the amount');
     }

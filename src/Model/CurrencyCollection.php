@@ -5,6 +5,13 @@ namespace Paysera\CommissionTask\Model;
 class CurrencyCollection
 {
     /**
+     * @var float[]
+     */
+    private array $rates;
+    private string $date;
+    private string $baseCurrency;
+
+    /**
      * @param array<string, float> $rates
      */
     public function __construct(

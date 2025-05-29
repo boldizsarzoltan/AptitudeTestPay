@@ -8,9 +8,19 @@ use Paysera\CommissionTask\Model\Customer;
 use Paysera\CommissionTask\Model\CustomerType;
 use Paysera\CommissionTask\Model\OperationModel;
 use Paysera\CommissionTask\Model\OperationType;
+use Paysera\CommissionTask\Repository\Currency\CurrencyRepository;
 
 class OperationMapper
 {
+    private CurrencyRepository $currencyRepository;
+
+    public function __construct(
+        CurrencyRepository $currencyRepository
+    ) {
+        $this->currencyRepository = $currencyRepository;
+    }
+
+
     public function mapOperation(array $operation): OperationModel
     {
         if (!isset($operation[0])) {
@@ -39,7 +49,7 @@ class OperationMapper
         );
         $operationType = new OperationType($operation[3]);
         $amount = $operation[4];
-        $currency = new Currency($operation[5]);
+        $currency = $this->currencyRepository->getCurrency($operation[5]);
         return new OperationModel(
             $date,
             $customer,
