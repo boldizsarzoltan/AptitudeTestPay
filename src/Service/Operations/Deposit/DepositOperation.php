@@ -5,6 +5,7 @@ namespace Paysera\CommissionTask\Service\Operations\Deposit;
 use Paysera\CommissionTask\Model\OperationModel;
 use Paysera\CommissionTask\Model\OperationResult;
 use Paysera\CommissionTask\Model\OperationType;
+use Paysera\CommissionTask\Service\Math;
 use Paysera\CommissionTask\Service\Operations\Deposit\Rule\DepositRuleInterface;
 use Paysera\CommissionTask\Service\Operations\Operation;
 
@@ -14,15 +15,17 @@ class DepositOperation implements Operation
      * @var array<DepositRuleInterface>
      */
     private array $operationRules;
+    private Math $math;
 
     /**
      * @param array<DepositRuleInterface> $operationRules
      */
     public function __construct(
-        array $operationRules
-    )
-    {
+        array $operationRules,
+        Math $math
+    ) {
         $this->operationRules = $operationRules;
+        $this->math = $math;
     }
 
     public function getType(): OperationType
@@ -39,10 +42,12 @@ class DepositOperation implements Operation
                 continue;
             }
             $matchedAmount = $operationRule->getMatchedAmount($operation);
-            $commission += $operationRule->getCommission(
-                $operation->getCopyWithNewAmount($matchedAmount)
+            $currentlyProcessed = $this->math->add($currentlyProcessed, $matchedAmount);
+            $commission = $this->math->add(
+                $commission,
+                $operationRule->getCommission($operation->getCopyWithNewAmount($matchedAmount))
             );
-            if ($matchedAmount == $operation->getAmount()) {
+            if ($currentlyProcessed == $operation->getAmount()) {
                 return new OperationResult($commission);
             }
         }

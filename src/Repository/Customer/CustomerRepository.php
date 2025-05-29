@@ -1,6 +1,6 @@
 <?php
 
-namespace Paysera\CommissionTask\Repositories\Customer;
+namespace Paysera\CommissionTask\Repository\Customer;
 
 use Paysera\CommissionTask\Model\Customer;
 

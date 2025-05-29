@@ -3,9 +3,18 @@
 namespace Paysera\CommissionTask\Service\Operations\Deposit\Rule;
 
 use Paysera\CommissionTask\Model\OperationModel;
+use Paysera\CommissionTask\Service\Math;
 
 class DefaultDepositRule implements DepositRuleInterface
 {
+    private Math $math;
+
+    public function __construct(Math $math)
+    {
+        $this->math = $math;
+    }
+
+
     public function isMatch(OperationModel $operation): bool
     {
         return true;
@@ -18,9 +27,7 @@ class DefaultDepositRule implements DepositRuleInterface
 
     public function getCommission(OperationModel $operation): float
     {
-        return round(
-            $operation->getAmount() / 1000 * 3,
-            2
-        );
+        // 0.03% = 0.03 /100 = 0.0003
+        return $this->math->multiply($operation->getAmount(), 0.0003);
     }
 }

@@ -2,22 +2,24 @@
 
 namespace Paysera\CommissionTask\Repository\Currency;
 
-use GuzzleHttp\Client;
 use Paysera\CommissionTask\Exception\InvalidCurrencyTypeException;
 use Paysera\CommissionTask\Model\Currency;
 use Paysera\CommissionTask\Model\CurrencyCollection;
-use Paysera\CommissionTask\Repositories\Currency\CurrencyRepository;
 use Paysera\CommissionTask\Service\Currency\CurrencyFetcherService;
+use Paysera\CommissionTask\Service\Math;
 
 class InMemoryCurrencyRepository implements CurrencyRepository
 {
     private CurrencyCollection $currencies;
     private CurrencyFetcherService $service;
+    private Math $math;
 
     public function __construct(
-        CurrencyFetcherService $service
+        CurrencyFetcherService $service,
+        Math $math
     ) {
         $this->service = $service;
+        $this->math = $math;
         $this->initCurrencies();
     }
 
@@ -29,6 +31,9 @@ class InMemoryCurrencyRepository implements CurrencyRepository
         return new Currency($currency);
     }
 
+    /**
+     * @throws InvalidCurrencyTypeException
+     */
     public function getCurrencyConversionRate(Currency $startCurrency, Currency $targetCurrency): float
     {
         if (
@@ -50,10 +55,12 @@ class InMemoryCurrencyRepository implements CurrencyRepository
             return $this->currencies->getRates()[$startCurrency->getCurrency()];
         }
         if ($startCurrency->isDefault()) {
-            return 1/$this->currencies->getRates()[$targetCurrency->getCurrency()];
+            return $this->math->divide(1, $this->currencies->getRates()[$targetCurrency->getCurrency()]);
         }
-        return $this->currencies->getRates()[$startCurrency->getCurrency()] *
-            (1/$this->currencies->getRates()[$targetCurrency->getCurrency()]);
+        return $this->math->multiply(
+            $this->currencies->getRates()[$startCurrency->getCurrency()],
+            $this->math->divide(1, $this->currencies->getRates()[$targetCurrency->getCurrency()])
+        );
     }
 
     private function initCurrencies(): void

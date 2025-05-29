@@ -4,9 +4,8 @@ namespace Paysera\CommissionTask\Repository\Balance;
 
 use Paysera\CommissionTask\Model\Balance;
 use Paysera\CommissionTask\Model\Customer;
-use Paysera\CommissionTask\Repositories\Balance\BalanceRepository;
 
-class InMemoryBalanceRepostiry implements BalanceRepository
+class InMemoryBalanceRepository implements BalanceRepository
 {
     /**
      * @var array<int, Balance>

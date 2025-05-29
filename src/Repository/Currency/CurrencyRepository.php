@@ -1,6 +1,6 @@
 <?php
 
-namespace Paysera\CommissionTask\Repositories\Currency;
+namespace Paysera\CommissionTask\Repository\Currency;
 
 use Paysera\CommissionTask\Exception\InvalidCurrencyTypeException;
 use Paysera\CommissionTask\Model\Currency;
@@ -14,5 +14,8 @@ interface CurrencyRepository
      */
     public function getCurrency(string $currency): Currency;
 
+    /**
+     * @throws InvalidCurrencyTypeException
+     */
     public function getCurrencyConversionRate(Currency $startCurrency, Currency $targetCurrency): float;
 }

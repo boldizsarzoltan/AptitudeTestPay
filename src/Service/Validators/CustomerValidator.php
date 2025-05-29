@@ -4,7 +4,7 @@ namespace Paysera\CommissionTask\Service\Validators;
 
 use Paysera\CommissionTask\Exception\CustomerValidationFailedException;
 use Paysera\CommissionTask\Model\Customer;
-use Paysera\CommissionTask\Repositories\Customer\CustomerRepository;
+use Paysera\CommissionTask\Repository\Customer\CustomerRepository;
 
 class CustomerValidator
 {

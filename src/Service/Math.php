@@ -17,4 +17,14 @@ class Math
     {
         return bcadd($leftOperand, $rightOperand, $this->scale);
     }
+
+    public function multiply(float $amount, float $scale): float
+    {
+        return (float) bcmul((string)$amount, (string)$scale, $this->scale);
+    }
+
+    public function divide(float $num1, float $num2): float
+    {
+        return (float) bcdiv((string)$num1, (string)$num2, $this->scale);
+    }
 }

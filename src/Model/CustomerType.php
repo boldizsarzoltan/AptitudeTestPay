@@ -31,4 +31,14 @@ class CustomerType
             throw new InvalidCustomerTypeException("Client type '$clientType' is not valid");
         }
     }
+
+    public function isBusinessClient(): bool
+    {
+        return $this->clientType === self::BUSINESS_CLIENT;
+    }
+
+    public function isPrivateClient(): bool
+    {
+        return $this->clientType === self::PRIVATE_CLIENT;
+    }
 }

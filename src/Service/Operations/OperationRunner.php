@@ -5,7 +5,7 @@ namespace Paysera\CommissionTask\Service\Operations;
 use Paysera\CommissionTask\Exception\UnknownOperationException;
 use Paysera\CommissionTask\Model\OperationModel;
 use Paysera\CommissionTask\Model\OperationResult;
-use Paysera\CommissionTask\Repositories\Balance\BalanceRepository;
+use Paysera\CommissionTask\Repository\Balance\BalanceRepository;
 use Paysera\CommissionTask\Service\Balance\BalanceCalculator;
 
 class OperationRunner

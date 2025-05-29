@@ -7,5 +7,6 @@ RUN composer install
 COPY ./src ./src
 COPY ./input.csv ./input.csv
 COPY ./script.php ./script.php
+COPY ./.env ./.env
 COPY ./phpunit.xml.dist ./phpunit.xml.dist
 CMD ["php-fpm", "-F"]

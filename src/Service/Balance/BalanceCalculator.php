@@ -6,20 +6,24 @@ use Paysera\CommissionTask\Model\Balance;
 use Paysera\CommissionTask\Model\OperationModel;
 use Paysera\CommissionTask\Model\OperationResult;
 use Paysera\CommissionTask\Model\OperationType;
-use Paysera\CommissionTask\Repositories\Balance\BalanceRepository;
+use Paysera\CommissionTask\Repository\Balance\BalanceRepository;
 use Paysera\CommissionTask\Service\Currency\CurrencyService;
+use Paysera\CommissionTask\Service\Math;
 
 class BalanceCalculator
 {
     private CurrencyService $currencyService;
     private BalanceRepository $repository;
+    private Math $math;
 
     public function __construct(
         BalanceRepository $repository,
-        CurrencyService $currencyService
+        CurrencyService $currencyService,
+        Math $math
     ) {
         $this->repository = $repository;
         $this->currencyService = $currencyService;
+        $this->math = $math;
     }
 
     public function calculateAndSaveBalance(OperationModel $operationModel, OperationResult $result): void
@@ -39,11 +43,11 @@ class BalanceCalculator
             case OperationType::WITHDRAW:
                 return new Balance(
                     $currentBalance->getDepositedAmount(),
-                    $amount + $currentBalance->getWithdrawalAmount()
+                    $this->math->add($amount, $currentBalance->getWithdrawalAmount())
                 );
             case OperationType::DEPOSIT:
                 return new Balance(
-                    $amount + $currentBalance->getDepositedAmount(),
+                    $this->math->add($amount, $currentBalance->getWithdrawalAmount()),
                     $currentBalance->getWithdrawalAmount()
                 );
         }

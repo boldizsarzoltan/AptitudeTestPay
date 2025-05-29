@@ -29,9 +29,4 @@ class Customer
     {
         return $this->customerType;
     }
-
-    public function setCustomerType(CustomerType $customerType): void
-    {
-        $this->customerType = $customerType;
-    }
 }

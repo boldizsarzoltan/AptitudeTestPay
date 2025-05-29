@@ -3,17 +3,20 @@
 namespace Paysera\CommissionTask\Service\Currency;
 
 use Paysera\CommissionTask\Model\Currency;
-use Paysera\CommissionTask\Repositories\Currency\CurrencyRepository;
-use Paysera\CommissionTask\Repositories\Customer\CustomerRepository;
+use Paysera\CommissionTask\Repository\Currency\CurrencyRepository;
+use Paysera\CommissionTask\Service\Math;
 
 class CurrencyService
 {
     private CurrencyRepository $repository;
+    private Math $math;
 
     public function __construct(
-        CurrencyRepository $repository
+        CurrencyRepository $repository,
+        Math $math
     ) {
         $this->repository = $repository;
+        $this->math = $math;
     }
 
     public function convertTo(Currency $startCurrency, Currency $targetCurrency, float $amount): float
@@ -22,7 +25,7 @@ class CurrencyService
             $startCurrency,
             $targetCurrency
         );
-        return $conversionRate * $amount;
+        return $this->math->multiply($amount, $conversionRate);
     }
 
     public function convertToDefault(Currency $currency, float $amount): float
@@ -34,6 +37,6 @@ class CurrencyService
             $currency,
             Currency::getDefaultCurrency()
         );
-        return $conversionRate * $amount;
+        return $this->math->multiply($amount, $conversionRate);
     }
 }

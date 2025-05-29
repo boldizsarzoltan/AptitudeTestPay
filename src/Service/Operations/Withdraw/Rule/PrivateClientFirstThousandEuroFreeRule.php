@@ -5,7 +5,7 @@ namespace Paysera\CommissionTask\Service\Operations\Withdraw\Rule;
 use Paysera\CommissionTask\Model\Currency;
 use Paysera\CommissionTask\Model\CustomerType;
 use Paysera\CommissionTask\Model\OperationModel;
-use Paysera\CommissionTask\Repositories\Balance\BalanceRepository;
+use Paysera\CommissionTask\Repository\Balance\BalanceRepository;
 use Paysera\CommissionTask\Service\Currency\CurrencyService;
 
 class PrivateClientFirstThousandEuroFreeRule implements WithdrawRuleInterface
@@ -22,7 +22,7 @@ class PrivateClientFirstThousandEuroFreeRule implements WithdrawRuleInterface
 
     public function isMatch(OperationModel $operation): bool
     {
-        if ($operation->getCustomer()->getCustomerType() !== CustomerType::PRIVATE_CLIENT) {
+        if (!$operation->getCustomer()->getCustomerType()->isPrivateClient()) {
             return false;
         }
         $currentBalance = $this->repository->getBalance($operation->getCustomer());

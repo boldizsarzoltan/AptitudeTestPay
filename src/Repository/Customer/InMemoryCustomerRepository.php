@@ -3,7 +3,6 @@
 namespace Paysera\CommissionTask\Repository\Customer;
 
 use Paysera\CommissionTask\Model\Customer;
-use Paysera\CommissionTask\Repositories\Customer\CustomerRepository;
 
 class InMemoryCustomerRepository implements CustomerRepository
 {
