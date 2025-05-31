@@ -1,7 +1,7 @@
 <?php
 
-use Paysera\CommissionTask\Repository\Balance\BalanceRepository;
-use Paysera\CommissionTask\Repository\Balance\InMemoryBalanceRepository;
+use Paysera\CommissionTask\Repository\Balance\HistoryRepository;
+use Paysera\CommissionTask\Repository\Balance\InMemoryHistoryRepository;
 use Paysera\CommissionTask\Repository\Currency\CurrencyRepository;
 use Paysera\CommissionTask\Repository\Currency\InMemoryCurrencyRepository;
 use Paysera\CommissionTask\Repository\Customer\CustomerRepository;
@@ -41,7 +41,7 @@ return [
         }
         return $_ENV['API_URL'];
     }),
-    InMemoryBalanceRepository::class => autowire(InMemoryBalanceRepository::class)
+    InMemoryHistoryRepository::class => autowire(InMemoryHistoryRepository::class)
         ->constructorParameter('apiKey', get('api.key')),
     DepositOperation::class => autowire(DepositOperation::class)
         ->constructorParameter(
@@ -73,7 +73,7 @@ return [
                 ];
             }
         ),
-    BalanceRepository::class => autowire(InMemoryBalanceRepository::class),
+    HistoryRepository::class => autowire(InMemoryHistoryRepository::class),
     CurrencyRepository::class => autowire(InMemoryCurrencyRepository::class),
     CustomerRepository::class => autowire(InMemoryCustomerRepository::class),
     CurrencyFetcherService::class => autowire(CurrencyFetcherService::class)

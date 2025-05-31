@@ -27,4 +27,12 @@ class Math
     {
         return (float) bcdiv((string)$num1, (string)$num2, $this->scale);
     }
+
+    public function round(float $amount): float
+    {
+        if ($amount < 1) { // Check if it's a large float not already an integer
+            return round($amount);
+        }
+        return ceil($amount);
+    }
 }

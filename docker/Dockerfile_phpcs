@@ -1,8 +1,17 @@
-FROM php:7.4-fpm-alpine
+FROM php:7.4-fpm
+RUN apt-get update && apt-get install -y \
+    git \
+    zip \
+    unzip \
+    libzip-dev \
+    && docker-php-ext-install zip
 WORKDIR /app
 COPY composer.json  ./
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+RUN pecl install xdebug-2.9.8 \
+    && docker-php-ext-enable xdebug
 RUN docker-php-ext-install bcmath
+COPY docker/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN composer install
 COPY ./src ./src
 COPY ./input.csv ./input.csv

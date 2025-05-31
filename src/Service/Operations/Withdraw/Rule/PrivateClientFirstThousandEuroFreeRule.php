@@ -5,17 +5,17 @@ namespace Paysera\CommissionTask\Service\Operations\Withdraw\Rule;
 use Paysera\CommissionTask\Model\Currency;
 use Paysera\CommissionTask\Model\CustomerType;
 use Paysera\CommissionTask\Model\OperationModel;
-use Paysera\CommissionTask\Repository\Balance\BalanceRepository;
+use Paysera\CommissionTask\Repository\Balance\HistoryRepository;
 use Paysera\CommissionTask\Service\Currency\CurrencyService;
 
 class PrivateClientFirstThousandEuroFreeRule implements WithdrawRuleInterface
 {
-    private BalanceRepository $repository;
+    private HistoryRepository $repository;
     private CurrencyService $currencyService;
 
     public function __construct(
-        BalanceRepository $repository,
-        CurrencyService $currencyService
+        HistoryRepository $repository,
+        CurrencyService   $currencyService
     ) {
         $this->repository = $repository;
         $this->currencyService = $currencyService;
@@ -26,21 +26,33 @@ class PrivateClientFirstThousandEuroFreeRule implements WithdrawRuleInterface
         if (!$operation->getCustomer()->getCustomerType()->isPrivateClient()) {
             return false;
         }
-        $currentBalance = $this->repository->getBalance($operation->getCustomer());
-        return $currentBalance->getWithdrawalAmount() < 1000;
+        $currentHistory = $this->repository->getHistory(
+            $operation->getCustomer(),
+            $operation->getDateTime()
+        );
+        if ($currentHistory->getWithdrawalCount() > 3) {
+            return false;
+        }
+        return $currentHistory->getWithdrawalAmount() < 1000;
     }
 
     public function getMatchedAmount(OperationModel $operation): float
     {
-        $currentBalance = $this->repository->getBalance($operation->getCustomer());
+        $currentHistory = $this->repository->getHistory(
+            $operation->getCustomer(),
+            $operation->getDateTime()
+        );
         $currentOperationInDefault = $this->currencyService->convertToDefault(
             $operation->getCurrency(),
             $operation->getAmount()
         );
         $matchedAmount = (float) min(
-            max(1000 - $currentBalance->getWithdrawalAmount(), 0),
+            max(1000 - $currentHistory->getWithdrawalAmount(), 0),
             $currentOperationInDefault
         );
+        if ($matchedAmount == $currentOperationInDefault) {
+            return $operation->getAmount();
+        }
         return $this->currencyService->convertTo(
             Currency::getDefaultCurrency(),
             $operation->getCurrency(),

@@ -5,24 +5,24 @@ namespace Paysera\CommissionTask\Service\Operations;
 use Paysera\CommissionTask\Exception\UnknownOperationException;
 use Paysera\CommissionTask\Model\OperationModel;
 use Paysera\CommissionTask\Model\OperationResult;
-use Paysera\CommissionTask\Repository\Balance\BalanceRepository;
-use Paysera\CommissionTask\Service\Balance\BalanceCalculator;
+use Paysera\CommissionTask\Repository\Balance\HistoryRepository;
+use Paysera\CommissionTask\Service\HIstory\HistoryService;
 
 class OperationRunner
 {
-    private BalanceCalculator $balanceCalculator;
+    private HistoryService $balanceCalculator;
     /**
      * @var Operation[]
      */
     private array $operations;
 
     /**
-     * @param BalanceCalculator $balanceCalculator
+     * @param HistoryService $balanceCalculator
      * @param array<Operation> $operations
      */
     public function __construct(
-        BalanceCalculator $balanceCalculator,
-        array $operations
+        HistoryService $balanceCalculator,
+        array          $operations
     ) {
         $this->balanceCalculator = $balanceCalculator;
         /**
@@ -36,7 +36,7 @@ class OperationRunner
     public function runOperation(OperationModel $operation): OperationResult
     {
         $operationResult = $this->doOperation($operation);
-        $this->balanceCalculator->calculateAndSaveBalance($operation, $operationResult);
+        $this->balanceCalculator->addHistory($operation, $operationResult);
         return $operationResult;
     }
 
