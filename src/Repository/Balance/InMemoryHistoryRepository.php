@@ -4,7 +4,6 @@ namespace Paysera\CommissionTask\Repository\Balance;
 
 use Paysera\CommissionTask\Model\History;
 use Paysera\CommissionTask\Model\Customer;
-use Paysera\CommissionTask\Utils\DateTimeService;
 
 class InMemoryHistoryRepository implements HistoryRepository
 {
@@ -13,9 +12,7 @@ class InMemoryHistoryRepository implements HistoryRepository
      */
     private array $balances;
 
-    public function __construct(
-        DateTimeService $service
-    )
+    public function __construct()
     {
         $this->balances = [];
     }
@@ -41,7 +38,6 @@ class InMemoryHistoryRepository implements HistoryRepository
 
     private function getCurrentRelevantTimeFormat(\DateTime $dateTime): string
     {
-        $currentTime = new DateTimeService();
-        return $currentTime->getCurrentDateTime($dateTime)->format("o-W");
+        return $dateTime->format("o-W");
     }
 }

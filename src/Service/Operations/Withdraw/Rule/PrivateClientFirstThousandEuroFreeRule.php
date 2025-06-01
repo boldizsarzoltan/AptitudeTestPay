@@ -15,7 +15,7 @@ class PrivateClientFirstThousandEuroFreeRule implements WithdrawRuleInterface
 
     public function __construct(
         HistoryRepository $repository,
-        CurrencyService   $currencyService
+        CurrencyService $currencyService
     ) {
         $this->repository = $repository;
         $this->currencyService = $currencyService;

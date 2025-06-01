@@ -5,17 +5,17 @@ namespace Paysera\CommissionTask\Repository\Currency;
 use Paysera\CommissionTask\Exception\InvalidCurrencyTypeException;
 use Paysera\CommissionTask\Model\Currency;
 use Paysera\CommissionTask\Model\CurrencyCollection;
-use Paysera\CommissionTask\Service\Currency\CurrencyFetcherService;
+use Paysera\CommissionTask\Service\Currency\CurrencyFetcher;
 use Paysera\CommissionTask\Service\Math;
 
 class InMemoryCurrencyRepository implements CurrencyRepository
 {
     private CurrencyCollection $currencies;
-    private CurrencyFetcherService $service;
+    private CurrencyFetcher $service;
     private Math $math;
 
     public function __construct(
-        CurrencyFetcherService $service,
+        CurrencyFetcher $service,
         Math $math
     ) {
         $this->service = $service;

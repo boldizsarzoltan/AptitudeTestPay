@@ -6,6 +6,7 @@ use Paysera\CommissionTask\Repository\Currency\CurrencyRepository;
 use Paysera\CommissionTask\Repository\Currency\InMemoryCurrencyRepository;
 use Paysera\CommissionTask\Repository\Customer\CustomerRepository;
 use Paysera\CommissionTask\Repository\Customer\InMemoryCustomerRepository;
+use Paysera\CommissionTask\Service\Currency\CurrencyFetcher;
 use Paysera\CommissionTask\Service\Currency\CurrencyFetcherService;
 use Paysera\CommissionTask\Service\Math;
 use Paysera\CommissionTask\Service\Operations\Deposit\DepositOperation;
@@ -76,7 +77,7 @@ return [
     HistoryRepository::class => autowire(InMemoryHistoryRepository::class),
     CurrencyRepository::class => autowire(InMemoryCurrencyRepository::class),
     CustomerRepository::class => autowire(InMemoryCustomerRepository::class),
-    CurrencyFetcherService::class => autowire(CurrencyFetcherService::class)
+    CurrencyFetcher::class => autowire(CurrencyFetcherService::class)
     ->constructorParameter('apiKey', get('api.key'))
     ->constructorParameter('baseUrl', get('api.url')),
     Math::class => autowire(Math::class)

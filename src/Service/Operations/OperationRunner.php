@@ -22,7 +22,7 @@ class OperationRunner
      */
     public function __construct(
         HistoryService $balanceCalculator,
-        array          $operations
+        array $operations
     ) {
         $this->balanceCalculator = $balanceCalculator;
         /**
