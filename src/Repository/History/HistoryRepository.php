@@ -1,6 +1,6 @@
 <?php
 
-namespace Paysera\CommissionTask\Repository\Balance;
+namespace Paysera\CommissionTask\Repository\History;
 
 use Paysera\CommissionTask\Model\History;
 use Paysera\CommissionTask\Model\Customer;

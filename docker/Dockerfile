@@ -5,6 +5,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 RUN docker-php-ext-install bcmath
 RUN composer install --no-dev --no-scripts --no-interaction
 COPY ./src ./src
+COPY ./config ./config
 COPY ./script.php ./script.php
 COPY ./.env ./.env
 COPY ./input.csv ./input.csv

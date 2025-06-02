@@ -5,7 +5,7 @@ namespace Paysera\CommissionTask\Service\Operations\Withdraw\Rule;
 use Paysera\CommissionTask\Model\Currency;
 use Paysera\CommissionTask\Model\CustomerType;
 use Paysera\CommissionTask\Model\OperationModel;
-use Paysera\CommissionTask\Repository\Balance\HistoryRepository;
+use Paysera\CommissionTask\Repository\History\HistoryRepository;
 use Paysera\CommissionTask\Service\Currency\CurrencyService;
 
 class PrivateClientFirstThousandEuroFreeRule implements WithdrawRuleInterface

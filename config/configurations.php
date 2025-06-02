@@ -1,7 +1,7 @@
 <?php
 
-use Paysera\CommissionTask\Repository\Balance\HistoryRepository;
-use Paysera\CommissionTask\Repository\Balance\InMemoryHistoryRepository;
+use Paysera\CommissionTask\Repository\History\HistoryRepository;
+use Paysera\CommissionTask\Repository\History\InMemoryHistoryRepository;
 use Paysera\CommissionTask\Repository\Currency\CurrencyRepository;
 use Paysera\CommissionTask\Repository\Currency\InMemoryCurrencyRepository;
 use Paysera\CommissionTask\Repository\Customer\CustomerRepository;
